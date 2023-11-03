@@ -52,6 +52,9 @@ public class WaveSpawner : MonoBehaviour
     /// </summary>
     void SpawnEnemy()
     {
-        Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        int count = 0;
+        GameObject clone = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
+        count++;
+        clone.name = clone.name + count.ToString();
     }
 }
