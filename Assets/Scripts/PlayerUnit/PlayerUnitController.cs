@@ -76,12 +76,12 @@ public class PlayerUnitController : MonoBehaviour
     /// <summary>
     /// シーン上に攻撃範囲のギズモを表示する
     /// </summary>
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, range);
-        //Gizmos.DrawWireCube(transform.position, range);
-    }
+    //private void OnDrawGizmosSelected()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawWireSphere(transform.position, range);
+    //    //Gizmos.DrawWireCube(transform.position, range);
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
