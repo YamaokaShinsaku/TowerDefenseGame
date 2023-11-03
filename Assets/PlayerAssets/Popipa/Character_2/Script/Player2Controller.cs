@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
 public class Player2Controller : MonoBehaviour
 {
 	
@@ -10,13 +8,6 @@ public class Player2Controller : MonoBehaviour
 
 	// Controls facing direction
 	public bool facingRight;
-
-	// Use this for initialization
-	void Start()
-	{
-		
-
-	}
 
 	public void Escape()
 	{
@@ -54,22 +45,6 @@ public class Player2Controller : MonoBehaviour
 	{
 		anim.SetBool("Attack", false);
 	}
-
-
-
-
-
-	// Update is called once per frame
-	void Update()
-	{
-
-
-
-	} // Closes Update()
-
-	// Function to flip Character in direction it's moving
-	
-
 }
 
 
