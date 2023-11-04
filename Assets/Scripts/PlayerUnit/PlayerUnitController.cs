@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
+/// プレイヤーの向き
+/// </summary>
+public enum PlayerDirection
+{
+    Front,  // 前
+    Back,   // 後ろ
+    Right,  // 右
+    Left    // 左
+}
+
+/// <summary>
 /// プレイヤーユニットの行動制御
 /// </summary>
 public class PlayerUnitController : MonoBehaviour
@@ -27,6 +38,8 @@ public class PlayerUnitController : MonoBehaviour
     [SerializeField]
     private Transform createAttackEffectTransform;
 
+    public PlayerDirection  direction = PlayerDirection.Front;
+
     public Animator animator;
 
     [Header("No need to touch")]
@@ -41,6 +54,7 @@ public class PlayerUnitController : MonoBehaviour
     void Start()
     {
         //InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        SetPlayerUnitDirection();
     }
 
     // Update is called once per frame
@@ -77,6 +91,28 @@ public class PlayerUnitController : MonoBehaviour
         animator.SetTrigger("isAttack");
         // 攻撃エフェクトを生成
         Instantiate(attackEffect, createAttackEffectTransform);
+    }
+
+    /// <summary>
+    /// プレイヤーの向きを設定
+    /// </summary>
+    public void SetPlayerUnitDirection()
+    {
+        switch(direction)
+        {
+            case PlayerDirection.Front:
+                this.transform.rotation = new Quaternion(0, 0, 0, 0);
+                break;
+            case PlayerDirection.Back:
+                this.transform.rotation = new Quaternion(0, 180, 0, 0);
+                break;
+            case PlayerDirection.Right:
+                this.transform.rotation = new Quaternion(0, 90, 0, 0);
+                break;
+            case PlayerDirection.Left:
+                this.transform.rotation = new Quaternion(0, -90, 0, 0);
+                break;
+        }
     }
 
     // 攻撃範囲内に敵が入って来た時
