@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// プレイヤーの向き
 /// </summary>
-public enum PlayerDirection
+public enum PlayerUnitDirection
 {
     Front,  // 前
     Back,   // 後ろ
@@ -37,8 +37,8 @@ public class PlayerUnitController : MonoBehaviour
     // 攻撃エフェクトの生成場所
     [SerializeField]
     private Transform createAttackEffectTransform;
-
-    public PlayerDirection  direction = PlayerDirection.Front;
+    // プレイヤーユニットの向いている方向
+    public PlayerUnitDirection  direction;
 
     public Animator animator;
 
@@ -54,7 +54,7 @@ public class PlayerUnitController : MonoBehaviour
     void Start()
     {
         //InvokeRepeating("UpdateTarget", 0f, 0.5f);
-        SetPlayerUnitDirection();
+        SetPlayerUnitDirection(direction);
     }
 
     // Update is called once per frame
@@ -65,7 +65,7 @@ public class PlayerUnitController : MonoBehaviour
         //{
         //    return;
         //}
-        if(enemiesInAttackArea == null || enemiesInAttackArea.Count == 0)
+        if (enemiesInAttackArea == null || enemiesInAttackArea.Count == 0)
         {
             // 攻撃レートをリセット
             attackCountDown = 0.0f;
@@ -96,21 +96,21 @@ public class PlayerUnitController : MonoBehaviour
     /// <summary>
     /// プレイヤーの向きを設定
     /// </summary>
-    public void SetPlayerUnitDirection()
+    public void SetPlayerUnitDirection(PlayerUnitDirection direction)
     {
-        switch(direction)
+        switch (direction)
         {
-            case PlayerDirection.Front:
-                this.transform.rotation = new Quaternion(0, 0, 0, 0);
+            case PlayerUnitDirection.Front:
+                this.transform.eulerAngles = new Vector3(0, 0, 0);
                 break;
-            case PlayerDirection.Back:
-                this.transform.rotation = new Quaternion(0, 180, 0, 0);
+            case PlayerUnitDirection.Back:
+                this.transform.eulerAngles = new Vector3(0, 180, 0);
                 break;
-            case PlayerDirection.Right:
-                this.transform.rotation = new Quaternion(0, 90, 0, 0);
+            case PlayerUnitDirection.Right:
+                this.transform.eulerAngles = new Vector3(0, 90, 0);
                 break;
-            case PlayerDirection.Left:
-                this.transform.rotation = new Quaternion(0, -90, 0, 0);
+            case PlayerUnitDirection.Left:
+                this.transform.eulerAngles = new Vector3(0, -90, 0);
                 break;
         }
     }
