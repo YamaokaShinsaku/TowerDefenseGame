@@ -18,6 +18,8 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     // ブロック上に存在するプレイヤーユニット
     private GameObject playerUnit;
 
+    //private GameObject clone;
+
     private void Start()
     {
         renderer = GetComponent<Renderer>();
@@ -30,6 +32,11 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     /// <param name="eventData"></param>
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (BuildManager.instance.GetPlayerUnitToBuild() == null)
+        {
+            return;
+        }
+
         // プレイヤーユニットが存在する場合
         if (playerUnit != null)
         {
@@ -40,6 +47,8 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
         // 配置するプレイヤーユニットを取得
         GameObject playerUnitToBuild = BuildManager.instance.GetPlayerUnitToBuild();
         playerUnit = Instantiate(playerUnitToBuild, this.transform.position + builPositonOffset, this.transform.rotation);
+        // 連続で配置できないようにするためplayerUnitToBuildにNULLを入れる
+        BuildManager.instance.playerUnitToBuild = null;
     }
 
     /// <summary>
@@ -48,8 +57,16 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     /// <param name="eventData"></param>
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (BuildManager.instance.GetPlayerUnitToBuild() == null)
+        {
+            return;
+        }
         // Colorを変更する
         renderer.material.color = hoverColor;
+
+        // 選択されているプレイヤーユニットを取得
+        //GameObject playerUnitToBuild = BuildManager.instance.GetPlayerUnitToBuild();
+        //clone = Instantiate(playerUnitToBuild, this.transform.position + builPositonOffset, this.transform.rotation);
     }
 
     /// <summary>
@@ -60,6 +77,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     {
         // Colorを初期Colorに戻す
         renderer.material.color = startColor;
+        //Destroy(clone);
     }
 
     ///// <summary>

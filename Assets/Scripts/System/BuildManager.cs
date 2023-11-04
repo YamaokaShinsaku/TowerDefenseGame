@@ -9,10 +9,11 @@ public class BuildManager : MonoBehaviour
     public static BuildManager instance;
 
     // 配置するプレイヤーユニット
-    private GameObject playerUnitToBuild;
+    public GameObject playerUnitToBuild;
 
-    // デフォルトのプレイヤーユニット
-    public GameObject standardPlayerUnitPrefab;
+    // プレイヤーユニット
+    public GameObject playerUnit1Prefab;
+    public GameObject playerUnit2Prefab;
 
     private void Awake()
     {
@@ -24,11 +25,6 @@ public class BuildManager : MonoBehaviour
         instance = this;
     }
 
-    private void Start()
-    {
-        playerUnitToBuild = standardPlayerUnitPrefab;
-    }
-
     /// <summary>
     /// 配置するプレイヤーユニットを取得する
     /// </summary>
@@ -36,5 +32,23 @@ public class BuildManager : MonoBehaviour
     public GameObject GetPlayerUnitToBuild()
     { 
         return playerUnitToBuild; 
+    }
+
+    /// <summary>
+    /// PlayerUnit_1を取得
+    /// </summary>
+    /// <param name="playerUnit"></param>
+    public void SetPlayerUnit1ToBuild(GameObject playerUnit)
+    {
+        playerUnitToBuild = playerUnit;
+    }
+
+    /// <summary>
+    /// PlayerUnit_2を取得
+    /// </summary>
+    /// <param name="playerUnit"></param>
+    public void SetPlayerUnit2ToBuild(GameObject playerUnit)
+    {
+        playerUnitToBuild = playerUnit;
     }
 }
