@@ -40,11 +40,15 @@ public class PlayerUnitController : MonoBehaviour
     // プレイヤーユニットの向いている方向
     public PlayerUnitDirection  direction;
 
+    public bool pushDirectionButton = false;
+
     public Animator animator;
 
     [Header("No need to touch")]
     // 敵キャラクターのタグ
     public string enemyTag = "Enemy";
+
+    public GameObject directionButtons;
 
     // 攻撃範囲内にいる敵を格納するList
     [SerializeField]
@@ -54,7 +58,7 @@ public class PlayerUnitController : MonoBehaviour
     void Start()
     {
         //InvokeRepeating("UpdateTarget", 0f, 0.5f);
-        SetPlayerUnitDirection(direction);
+        Time.timeScale = 0.2f;
     }
 
     // Update is called once per frame
@@ -113,6 +117,35 @@ public class PlayerUnitController : MonoBehaviour
                 this.transform.eulerAngles = new Vector3(0, -90, 0);
                 break;
         }
+    }
+
+    public void SetFront()
+    {
+        direction = PlayerUnitDirection.Front;
+        SetPlayerUnitDirection(direction);
+        Time.timeScale = 1.0f;
+        pushDirectionButton = true;
+    }
+    public void SetBack()
+    {
+        direction = PlayerUnitDirection.Back;
+        SetPlayerUnitDirection(direction);
+        Time.timeScale = 1.0f;
+        pushDirectionButton = true;
+    }
+    public void SetRight()
+    {
+        direction = PlayerUnitDirection.Right;
+        SetPlayerUnitDirection(direction);
+        Time.timeScale = 1.0f;
+        pushDirectionButton = true;
+    }
+    public void SetLeft()
+    {
+        direction = PlayerUnitDirection.Left;
+        SetPlayerUnitDirection(direction);
+        Time.timeScale = 1.0f;
+        pushDirectionButton = true;
     }
 
     // 攻撃範囲内に敵が入って来た時

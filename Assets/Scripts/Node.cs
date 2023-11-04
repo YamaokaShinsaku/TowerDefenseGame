@@ -1,16 +1,10 @@
 using UnityEngine;
-
-public enum Sequence
-{
-    SelectDirection,    // プレイヤーユニットの向きを選択
-    BuildPlayerUnit,    // プレイヤーユニットを配置
-    None
-}
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// ブロック上に何かが構築されているかを調べる
 /// </summary>
-public class Node : MonoBehaviour
+public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPointerEnterHandler
 {
     // 選択されたときのColor
     public Color hoverColor;
@@ -21,8 +15,6 @@ public class Node : MonoBehaviour
 
     private Renderer renderer;
 
-    Sequence sequence;
-
     // ブロック上に存在するプレイヤーユニット
     private GameObject playerUnit;
 
@@ -32,13 +24,45 @@ public class Node : MonoBehaviour
         startColor = renderer.material.color;
     }
 
-    /// <summary>
-    /// オブジェクト選択中にマウスボタンが押されたとき呼ばれる
-    /// </summary>
-    private void OnMouseDown()
+    ///// <summary>
+    ///// オブジェクト選択中にマウスボタンが押されたとき呼ばれる
+    ///// </summary>
+    //private void OnMouseDown()
+    //{
+    //    // プレイヤーユニットが存在する場合
+    //    if(playerUnit != null) 
+    //    {
+    //        Debug.Log("ここには配置できません");
+    //        return;
+    //    }
+
+    //    // 配置するプレイヤーユニットを取得
+    //    GameObject playerUnitToBuild = BuildManager.instance.GetPlayerUnitToBuild();
+    //    playerUnit = Instantiate(playerUnitToBuild, this.transform.position + builPositonOffset, this.transform.rotation);
+    //}
+
+    ///// <summary>
+    ///// オブジェクトにマウスが重なっているときに呼ばれる
+    ///// </summary>
+    //private void OnMouseEnter()
+    //{
+    //    // Colorを変更する
+    //    renderer.material.color = hoverColor;
+    //}
+
+    ///// <summary>
+    ///// マウスがオブジェクトから離れたときに呼ばれる
+    ///// </summary>
+    //private void OnMouseExit()
+    //{
+    //    // Colorを初期Colorに戻す
+    //    renderer.material.color = startColor;
+    //}
+
+    public void OnPointerDown(PointerEventData eventData)
     {
         // プレイヤーユニットが存在する場合
-        if(playerUnit != null) 
+        if (playerUnit != null)
         {
             Debug.Log("ここには配置できません");
             return;
@@ -49,21 +73,15 @@ public class Node : MonoBehaviour
         playerUnit = Instantiate(playerUnitToBuild, this.transform.position + builPositonOffset, this.transform.rotation);
     }
 
-    /// <summary>
-    /// オブジェクトにマウスが重なっているときに呼ばれる
-    /// </summary>
-    private void OnMouseEnter()
-    {
-        // Colorを変更する
-        renderer.material.color = hoverColor;
-    }
-
-    /// <summary>
-    /// マウスがオブジェクトから離れたときに呼ばれる
-    /// </summary>
-    private void OnMouseExit()
+    public void OnPointerExit(PointerEventData eventData)
     {
         // Colorを初期Colorに戻す
         renderer.material.color = startColor;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // Colorを変更する
+        renderer.material.color = hoverColor;
     }
 }
