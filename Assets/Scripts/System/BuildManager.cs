@@ -44,6 +44,15 @@ public class BuildManager : MonoBehaviour
     /// <param name="node">Node</param>
     public void BuildPlayerUnitOnNode(Node node)
     {
+        if(PlayerStats.cost < unitDataToBuild.cost)
+        {
+            Debug.Log("設置コストが足りません");
+            return;
+        }
+
+        // コストを使用する
+        PlayerStats.cost -= unitDataToBuild.cost;
+
         // 配置するプレイヤーユニットを取得
         GameObject playerUnit =
             Instantiate(unitDataToBuild.prefab, node.transform.position + node.builPositonOffset, node.transform.rotation);
@@ -51,5 +60,7 @@ public class BuildManager : MonoBehaviour
 
         // 連続で配置できないようにするためplayerUnitToBuildにNULLを入れる
         unitDataToBuild = null;
+
+        Debug.Log("残りコスト　: " + PlayerStats.cost);
     }
 }
