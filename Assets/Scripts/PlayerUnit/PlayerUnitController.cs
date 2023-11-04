@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PlayerUnitController : MonoBehaviour
 {
+    [Header("Unit Setting")]
     // 現在の攻撃対象
     [SerializeField]
     private GameObject target;
@@ -14,6 +15,21 @@ public class PlayerUnitController : MonoBehaviour
     public float range = 15.0f;
     //public Vector3 range;
 
+    // 攻撃速度（レート）
+    public float attackRate = 1.0f;
+    // 攻撃までのカウントダウン
+    [SerializeField]
+    private float attackCountDown = 0.0f;
+
+    // 攻撃エフェクト
+    public GameObject attackEffect;
+    // 攻撃エフェクトの生成場所
+    [SerializeField]
+    private Transform createAttackEffectTransform;
+
+    public Animator animator;
+
+    [Header("No need to touch")]
     // 敵キャラクターのタグ
     public string enemyTag = "Enemy";
 
@@ -24,15 +40,61 @@ public class PlayerUnitController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        //InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!target)
+        // 攻撃対象が存在しない場合は、以降処理しない
+        //if (!target)
+        //{
+        //    return;
+        //}
+        if(enemiesInAttackArea == null || enemiesInAttackArea.Count == 0)
         {
+            // 攻撃レートをリセット
+            attackCountDown = 0.0f;
             return;
+        }
+
+        // 攻撃を行う
+        if (attackCountDown <= 0.0f　&& enemiesInAttackArea.Count != 0)
+        {
+            Attack();
+            attackCountDown = 1.0f / attackRate;
+        }
+        attackCountDown -= Time.deltaTime;
+    }
+
+    /// <summary>
+    /// 攻撃処理
+    /// </summary>
+    void Attack()
+    {
+        Debug.Log(this.gameObject.name + "Attack");
+        // 攻撃アニメーションを再生
+        animator.SetTrigger("isAttack");
+        // 攻撃エフェクトを生成
+        Instantiate(attackEffect, createAttackEffectTransform);
+    }
+
+    // 攻撃範囲内に敵が入って来た時
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == enemyTag)
+        {
+            //target = other.gameObject;
+            enemiesInAttackArea.Add(other.gameObject);
+        }
+    }
+    // 攻撃範囲内から敵が出た時
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == enemyTag)
+        {
+            //target = null;
+            enemiesInAttackArea.RemoveAt(0);
         }
     }
 
@@ -82,21 +144,4 @@ public class PlayerUnitController : MonoBehaviour
     //    Gizmos.DrawWireSphere(transform.position, range);
     //    //Gizmos.DrawWireCube(transform.position, range);
     //}
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == enemyTag)
-        {
-            //target = other.gameObject;
-            enemiesInAttackArea.Add(other.gameObject);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.tag == enemyTag)
-        {
-            //target = null;
-            enemiesInAttackArea.RemoveAt(0);
-        }
-    }
 }
