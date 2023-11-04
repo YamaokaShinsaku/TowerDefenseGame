@@ -9,11 +9,15 @@ public class BuildManager : MonoBehaviour
     public static BuildManager instance;
 
     // 配置するプレイヤーユニット
-    public GameObject playerUnitToBuild;
+    //public GameObject playerUnitToBuild;
+    private PlayerUnitData unitDataToBuild;
 
-    // プレイヤーユニット
+    // 各プレイヤーユニットのPrefab
     public GameObject playerUnit1Prefab;
     public GameObject playerUnit2Prefab;
+
+    // プレイヤーユニットを設置できるかどうか
+    public bool CanBuildPlayerUnit { get { return unitDataToBuild != null; } }
 
     private void Awake()
     {
@@ -26,29 +30,26 @@ public class BuildManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 配置するプレイヤーユニットを取得する
+    /// 設置するプレイヤーユニットを選択
     /// </summary>
-    /// <returns>プレイヤーユニット</returns>
-    public GameObject GetPlayerUnitToBuild()
-    { 
-        return playerUnitToBuild; 
+    /// <param name="playerunitDataToBuild">PlayerUnitData</param>
+    public void SelectPlayerUnitToBuild(PlayerUnitData playerunitDataToBuild)
+    {
+        unitDataToBuild = playerunitDataToBuild;
     }
 
     /// <summary>
-    /// PlayerUnit_1を取得
+    /// 指定のNode上にプレイヤーユニットを設置
     /// </summary>
-    /// <param name="playerUnit"></param>
-    public void SetPlayerUnit1ToBuild(GameObject playerUnit)
+    /// <param name="node">Node</param>
+    public void BuildPlayerUnitOnNode(Node node)
     {
-        playerUnitToBuild = playerUnit;
-    }
+        // 配置するプレイヤーユニットを取得
+        GameObject playerUnit =
+            Instantiate(unitDataToBuild.prefab, node.transform.position + node.builPositonOffset, node.transform.rotation);
+        node.playerUnit = playerUnit;
 
-    /// <summary>
-    /// PlayerUnit_2を取得
-    /// </summary>
-    /// <param name="playerUnit"></param>
-    public void SetPlayerUnit2ToBuild(GameObject playerUnit)
-    {
-        playerUnitToBuild = playerUnit;
+        // 連続で配置できないようにするためplayerUnitToBuildにNULLを入れる
+        unitDataToBuild = null;
     }
 }

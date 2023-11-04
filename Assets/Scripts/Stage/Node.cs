@@ -10,13 +10,12 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     public Color hoverColor;
     // 初期のColorを保存する
     private Color startColor;
-    // 接地する際のオフセット座標
-    private Vector3 builPositonOffset = new Vector3(0, 0.5f, 0);
+    // 設置する際のオフセット座標
+    public Vector3 builPositonOffset = new Vector3(0, 0.5f, 0);
+    // ブロック上に存在するプレイヤーユニット
+    public GameObject playerUnit;
 
     private Renderer renderer;
-
-    // ブロック上に存在するプレイヤーユニット
-    private GameObject playerUnit;
 
     //private GameObject clone;
 
@@ -32,7 +31,8 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     /// <param name="eventData"></param>
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (BuildManager.instance.GetPlayerUnitToBuild() == null)
+        // プレイヤーユニットが設置できない場合
+        if (!BuildManager.instance.CanBuildPlayerUnit)
         {
             return;
         }
@@ -43,12 +43,8 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
             Debug.Log("ここには配置できません");
             return;
         }
-
-        // 配置するプレイヤーユニットを取得
-        GameObject playerUnitToBuild = BuildManager.instance.GetPlayerUnitToBuild();
-        playerUnit = Instantiate(playerUnitToBuild, this.transform.position + builPositonOffset, this.transform.rotation);
-        // 連続で配置できないようにするためplayerUnitToBuildにNULLを入れる
-        BuildManager.instance.playerUnitToBuild = null;
+        // プレイヤーユニットを設置する
+        BuildManager.instance.BuildPlayerUnitOnNode(this);
     }
 
     /// <summary>
@@ -57,7 +53,8 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     /// <param name="eventData"></param>
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (BuildManager.instance.GetPlayerUnitToBuild() == null)
+        // プレイヤーユニットが設置できない場合
+        if (!BuildManager.instance.CanBuildPlayerUnit)
         {
             return;
         }

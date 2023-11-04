@@ -936,11 +936,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787887, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PurchasePlayerUnit2
+      value: SelectPlayerUnit2
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787887, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnitCool, Assembly-CSharp
+      value: UnitCall, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787887, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1790,10 +1790,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f04e8fe22f77f24a8fde62be04fa859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerUnitToBuild: {fileID: 0}
   playerUnit1Prefab: {fileID: 3376568622284722341, guid: fa8d3cdfcf67d534cadcf03f6dc824a6, type: 3}
   playerUnit2Prefab: {fileID: 6526385322456785345, guid: 3821389ddbfbd3c4f88c89c3d609af73, type: 3}
-  cancelButton: {fileID: 0}
 --- !u!1 &1832559250
 GameObject:
   m_ObjectHideFlags: 0
@@ -1912,6 +1910,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77936df20350e4b4b8e877a19870bae5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unit1Data:
+    prefab: {fileID: 3376568622284722341, guid: fa8d3cdfcf67d534cadcf03f6dc824a6, type: 3}
+    cost: 5
+  unit2Data:
+    prefab: {fileID: 6526385322456785345, guid: 3821389ddbfbd3c4f88c89c3d609af73, type: 3}
+    cost: 10
 --- !u!1 &1847542475
 GameObject:
   m_ObjectHideFlags: 0
@@ -19812,11 +19816,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787887, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: PurchasePlayerUnit1
+      value: SelectPlayerUnit1
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787887, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: UnitCool, Assembly-CSharp
+      value: UnitCall, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787887, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
