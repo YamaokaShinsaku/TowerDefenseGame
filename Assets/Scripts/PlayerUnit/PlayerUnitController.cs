@@ -24,7 +24,6 @@ public class PlayerUnitController : MonoBehaviour
     private GameObject target;
     // 攻撃範囲
     public float range = 15.0f;
-    //public Vector3 range;
 
     // 攻撃速度（レート）
     public float attackRate = 1.0f;
@@ -39,7 +38,7 @@ public class PlayerUnitController : MonoBehaviour
     private Transform createAttackEffectTransform;
     // プレイヤーユニットの向いている方向
     public PlayerUnitDirection  direction;
-
+    // 方向選択ボタンが押されたかどうか
     public bool pushDirectionButton = false;
 
     public Animator animator;
@@ -76,13 +75,23 @@ public class PlayerUnitController : MonoBehaviour
             return;
         }
 
-        // 攻撃を行う
-        if (attackCountDown <= 0.0f　&& enemiesInAttackArea.Count != 0)
+        if(pushDirectionButton)
         {
-            Attack();
-            attackCountDown = 1.0f / attackRate;
+            // 攻撃を行う
+            if (attackCountDown <= 0.0f && enemiesInAttackArea.Count != 0)
+            {
+                Attack();
+                attackCountDown = 1.0f / attackRate;
+            }
         }
         attackCountDown -= Time.deltaTime;
+        //// 攻撃を行う
+        //if (attackCountDown <= 0.0f　&& enemiesInAttackArea.Count != 0)
+        //{
+        //    Attack();
+        //    attackCountDown = 1.0f / attackRate;
+        //}
+        //attackCountDown -= Time.deltaTime;
     }
 
     /// <summary>
@@ -119,6 +128,7 @@ public class PlayerUnitController : MonoBehaviour
         }
     }
 
+    // ボタンから呼ばれる方向決定を行う関数
     public void SetFront()
     {
         direction = PlayerUnitDirection.Front;

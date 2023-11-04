@@ -10,7 +10,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     public Color hoverColor;
     // 初期のColorを保存する
     private Color startColor;
-
+    // 接地する際のオフセット座標
     private Vector3 builPositonOffset = new Vector3(0, 0.5f, 0);
 
     private Renderer renderer;
@@ -22,6 +22,44 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     {
         renderer = GetComponent<Renderer>();
         startColor = renderer.material.color;
+    }
+
+    /// <summary>
+    /// オブジェクト選択中にマウスボタンが押されたときに呼ばれる
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        // プレイヤーユニットが存在する場合
+        if (playerUnit != null)
+        {
+            Debug.Log("ここには配置できません");
+            return;
+        }
+
+        // 配置するプレイヤーユニットを取得
+        GameObject playerUnitToBuild = BuildManager.instance.GetPlayerUnitToBuild();
+        playerUnit = Instantiate(playerUnitToBuild, this.transform.position + builPositonOffset, this.transform.rotation);
+    }
+
+    /// <summary>
+    /// カーソルがオブジェクトに重なっているときに呼ばれる
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        // Colorを変更する
+        renderer.material.color = hoverColor;
+    }
+
+    /// <summary>
+    /// カーソルがオブジェクトから離れたときに呼ばれる
+    /// </summary>
+    /// <param name="eventData"></param>
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        // Colorを初期Colorに戻す
+        renderer.material.color = startColor;
     }
 
     ///// <summary>
@@ -59,29 +97,4 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     //    renderer.material.color = startColor;
     //}
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        // プレイヤーユニットが存在する場合
-        if (playerUnit != null)
-        {
-            Debug.Log("ここには配置できません");
-            return;
-        }
-
-        // 配置するプレイヤーユニットを取得
-        GameObject playerUnitToBuild = BuildManager.instance.GetPlayerUnitToBuild();
-        playerUnit = Instantiate(playerUnitToBuild, this.transform.position + builPositonOffset, this.transform.rotation);
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        // Colorを初期Colorに戻す
-        renderer.material.color = startColor;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        // Colorを変更する
-        renderer.material.color = hoverColor;
-    }
 }
