@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -828,7 +828,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7596328147080787873, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_Name
-      value: Button (1)
+      value: PlayerUnit2Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 7596328147080787882, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
+      propertyPath: m_PreferredWidth
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7596328147080787882, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
+      propertyPath: m_PreferredHeight
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787884, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_Sprite
@@ -864,11 +872,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787886, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787886, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787886, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1820,7 +1828,7 @@ GameObject:
   - component: {fileID: 1832559254}
   - component: {fileID: 1832559255}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: PlayerUnitSelectionPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1845,7 +1853,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.22}
-  m_AnchoredPosition: {x: 0, y: 15.000123}
+  m_AnchoredPosition: {x: 0, y: 15.000122}
   m_SizeDelta: {x: 0, y: 29.999754}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1832559252
@@ -1855,7 +1863,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1832559250}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -19726,7 +19734,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7596328147080787873, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_Name
-      value: Button
+      value: PlayerUnit1Button
+      objectReference: {fileID: 0}
+    - target: {fileID: 7596328147080787882, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
+      propertyPath: m_FlexibleWidth
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7596328147080787882, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
+      propertyPath: m_FlexibleHeight
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7596328147080787882, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
+      propertyPath: m_PreferredWidth
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7596328147080787882, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
+      propertyPath: m_PreferredHeight
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787886, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_Pivot.x
@@ -19758,11 +19782,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787886, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 100
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787886, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 7596328147080787886, guid: fc9c18c93d56d3540a05559fadc8001f, type: 3}
       propertyPath: m_LocalPosition.x
