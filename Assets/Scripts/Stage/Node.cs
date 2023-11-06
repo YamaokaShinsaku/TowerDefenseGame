@@ -8,6 +8,8 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
 {
     // 選択されたときのColor
     public Color hoverColor;
+    // 必要なコストが足りないときのColor
+    public Color notEnoughCostcolor;
     // 初期のColorを保存する
     private Color startColor;
     // 設置する際のオフセット座標
@@ -32,7 +34,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     public void OnPointerDown(PointerEventData eventData)
     {
         // プレイヤーユニットが設置できない場合
-        if (!BuildManager.instance.CanBuildPlayerUnit)
+        if (!BuildManager.instance.canBuildPlayerUnit)
         {
             return;
         }
@@ -54,12 +56,21 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     public void OnPointerEnter(PointerEventData eventData)
     {
         // プレイヤーユニットが設置できない場合
-        if (!BuildManager.instance.CanBuildPlayerUnit)
+        if (!BuildManager.instance.canBuildPlayerUnit)
         {
             return;
         }
-        // Colorを変更する
-        renderer.material.color = hoverColor;
+
+        if(BuildManager.instance.hasMoney)
+        {
+            // Colorを変更する
+            renderer.material.color = hoverColor;
+        }
+        else
+        {
+            // Colorを変更する
+            renderer.material.color = notEnoughCostcolor;
+        }
 
         // 選択されているプレイヤーユニットを取得
         //GameObject playerUnitToBuild = BuildManager.instance.GetPlayerUnitToBuild();

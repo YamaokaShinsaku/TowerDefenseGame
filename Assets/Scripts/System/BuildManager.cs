@@ -17,7 +17,9 @@ public class BuildManager : MonoBehaviour
     public GameObject playerUnit2Prefab;
 
     // プレイヤーユニットを設置できるかどうか
-    public bool CanBuildPlayerUnit { get { return unitDataToBuild != null; } }
+    public bool canBuildPlayerUnit { get { return unitDataToBuild != null; } }
+    // コストが足りているかどうか
+    public bool hasMoney { get { return PlayerStats.cost >= unitDataToBuild.cost; } }
 
     private void Awake()
     {
