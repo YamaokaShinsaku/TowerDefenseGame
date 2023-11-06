@@ -16,6 +16,9 @@ public class BuildManager : MonoBehaviour
     public GameObject playerUnit1Prefab;
     public GameObject playerUnit2Prefab;
 
+    // プレイヤーユニット生成時のエフェクト
+    //public GameObject buildEffect;
+
     // プレイヤーユニットを設置できるかどうか
     public bool canBuildPlayerUnit { get { return unitDataToBuild != null; } }
     // コストが足りているかどうか
@@ -70,6 +73,8 @@ public class BuildManager : MonoBehaviour
         GameObject playerUnit =
             Instantiate(unitDataToBuild.prefab, node.transform.position + node.builPositonOffset, node.transform.rotation);
         node.playerUnit = playerUnit;
+        // 生成エフェクトの再生
+        //Instantiate(buildEffect, node.transform.position + node.builPositonOffset, node.transform.rotation);
 
         // 連続で配置できないようにするためplayerUnitToBuildにNULLを入れる
         unitDataToBuild = null;
