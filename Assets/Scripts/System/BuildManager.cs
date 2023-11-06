@@ -41,6 +41,17 @@ public class BuildManager : MonoBehaviour
     }
 
     /// <summary>
+    /// プレイヤーユニットの選択状態を解除する
+    /// </summary>
+    public void DeletePlayerUnitToBuild()
+    {
+        if(unitDataToBuild != null)
+        {
+            unitDataToBuild = null;
+        }
+    }
+
+    /// <summary>
     /// 指定のNode上にプレイヤーユニットを設置
     /// </summary>
     /// <param name="node">Node</param>

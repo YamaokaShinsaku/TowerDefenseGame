@@ -47,6 +47,8 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
         }
         // プレイヤーユニットを設置する
         BuildManager.instance.BuildPlayerUnitOnNode(this);
+
+        PlayerUnitDatasUI.instance.HideAllPlayerUnitDatasUI();
     }
 
     /// <summary>
