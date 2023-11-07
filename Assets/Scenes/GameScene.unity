@@ -3348,7 +3348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startCost: 20
-  startLife: 1
+  startLife: 20
 --- !u!114 &1759108136
 MonoBehaviour:
   m_ObjectHideFlags: 0

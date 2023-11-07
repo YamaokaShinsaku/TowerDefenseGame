@@ -24,6 +24,8 @@ public class PlayerUnitController : MonoBehaviour
     private GameObject target;
     // 攻撃範囲
     public float range = 15.0f;
+    // 攻撃力
+    public int attackValue = 1;
 
     // 攻撃速度（レート）
     public float attackRate = 1.0f;
@@ -46,7 +48,7 @@ public class PlayerUnitController : MonoBehaviour
     [Header("No need to touch")]
     // 敵キャラクターのタグ
     public string enemyTag = "Enemy";
-
+    // 方向選択ボタン
     public GameObject directionButtons;
 
     // 攻撃範囲内にいる敵を格納するList
@@ -70,9 +72,17 @@ public class PlayerUnitController : MonoBehaviour
         //}
         if (enemiesInAttackArea == null || enemiesInAttackArea.Count == 0)
         {
-            // 攻撃レートをリセット
-            attackCountDown = 0.0f;
             return;
+        }
+
+        // 配列内のオブジェクトがNullになれば削除する
+        // (敵が攻撃範囲内でDestroyされたときのための処理)
+        for (int i = 0; i < enemiesInAttackArea.Count; i++)
+        {
+            if (enemiesInAttackArea[i] == null)
+            {
+                enemiesInAttackArea.RemoveAt(i);
+            }
         }
 
         if(pushDirectionButton)
@@ -85,13 +95,6 @@ public class PlayerUnitController : MonoBehaviour
             }
         }
         attackCountDown -= Time.deltaTime;
-        //// 攻撃を行う
-        //if (attackCountDown <= 0.0f　&& enemiesInAttackArea.Count != 0)
-        //{
-        //    Attack();
-        //    attackCountDown = 1.0f / attackRate;
-        //}
-        //attackCountDown -= Time.deltaTime;
     }
 
     /// <summary>
@@ -99,11 +102,21 @@ public class PlayerUnitController : MonoBehaviour
     /// </summary>
     void Attack()
     {
-        Debug.Log(this.gameObject.name + "Attack");
+        //Debug.Log(this.gameObject.name + "Attack");
         // 攻撃アニメーションを再生
         animator.SetTrigger("isAttack");
         // 攻撃エフェクトを生成
         Instantiate(attackEffect, createAttackEffectTransform);
+        // 配列内の敵にダメージを与える
+        foreach (GameObject enemies in enemiesInAttackArea)
+        {
+            if(enemies != null)
+            {
+                enemies.GetComponent<Enemy>().TakeDamage(attackValue);
+            }   
+        }
+        // 攻撃レートをリセット
+        attackCountDown = 0.0f;
     }
 
     /// <summary>
@@ -164,6 +177,7 @@ public class PlayerUnitController : MonoBehaviour
         if (other.gameObject.tag == enemyTag)
         {
             //target = other.gameObject;
+            // 敵を配列に追加
             enemiesInAttackArea.Add(other.gameObject);
         }
     }
@@ -173,46 +187,47 @@ public class PlayerUnitController : MonoBehaviour
         if (other.gameObject.tag == enemyTag)
         {
             //target = null;
+            // 配列から削除する
             enemiesInAttackArea.RemoveAt(0);
         }
     }
 
-    /// <summary>
-    /// 攻撃対象の更新を行う
-    /// </summary>
-    void UpdateTarget()
-    {
-        // enemyTagを持つオブジェクトを配列に格納
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
-        // これまでに見つけた敵までの最短距離
-        float shortestDistance = Mathf.Infinity;
-        // 最も近い敵
-        GameObject nearestEnemy = null;
+    ///// <summary>
+    ///// 攻撃対象の更新を行う
+    ///// </summary>
+    //void UpdateTarget()
+    //{
+    //    // enemyTagを持つオブジェクトを配列に格納
+    //    GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+    //    // これまでに見つけた敵までの最短距離
+    //    float shortestDistance = Mathf.Infinity;
+    //    // 最も近い敵
+    //    GameObject nearestEnemy = null;
 
-        foreach (GameObject enemy in enemies)
-        {
-            // 自分とエネミーとの距離を計算
-            float distanceToEnemy = Vector3.Distance(this.transform.position, enemy.transform.position);
-            // 見つけた敵が現在の最短距離より近い位置にいるとき
-            if(distanceToEnemy < shortestDistance)
-            {
-                // nearestEnemy,shortestDistanceの更新を行う
-                shortestDistance = distanceToEnemy;
-                nearestEnemy = enemy;
-            }
-        }
+    //    foreach (GameObject enemy in enemies)
+    //    {
+    //        // 自分とエネミーとの距離を計算
+    //        float distanceToEnemy = Vector3.Distance(this.transform.position, enemy.transform.position);
+    //        // 見つけた敵が現在の最短距離より近い位置にいるとき
+    //        if(distanceToEnemy < shortestDistance)
+    //        {
+    //            // nearestEnemy,shortestDistanceの更新を行う
+    //            shortestDistance = distanceToEnemy;
+    //            nearestEnemy = enemy;
+    //        }
+    //    }
 
-        // 攻撃範囲内に敵が存在しているとき
-        if (nearestEnemy != null && shortestDistance <= range)
-        {
-            // 攻撃対象を設定
-            target = nearestEnemy;
-        }
-        else
-        {
-            target = null;
-        }
-    }
+    //    // 攻撃範囲内に敵が存在しているとき
+    //    if (nearestEnemy != null && shortestDistance <= range)
+    //    {
+    //        // 攻撃対象を設定
+    //        target = nearestEnemy;
+    //    }
+    //    else
+    //    {
+    //        target = null;
+    //    }
+    //}
 
     /// <summary>
     /// シーン上に攻撃範囲のギズモを表示する

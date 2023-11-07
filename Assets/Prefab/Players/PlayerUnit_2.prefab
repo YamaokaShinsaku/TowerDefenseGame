@@ -2245,6 +2245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   range: 15
+  attackValue: 3
   attackRate: 0.5
   attackCountDown: 0
   attackEffect: {fileID: 7226583673155636401, guid: 6fcc91cf401964544b6c5877c4f936a6, type: 3}
