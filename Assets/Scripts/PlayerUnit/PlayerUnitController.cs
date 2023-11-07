@@ -65,6 +65,11 @@ public class PlayerUnitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        attackCountDown -= Time.deltaTime;
+        if(attackCountDown <= 0.0f)
+        {
+            attackCountDown = 0.0f;
+        }
         // UŒ‚‘ÎÛ‚ª‘¶Ý‚µ‚È‚¢ê‡‚ÍAˆÈ~ˆ—‚µ‚È‚¢
         //if (!target)
         //{
@@ -72,8 +77,6 @@ public class PlayerUnitController : MonoBehaviour
         //}
         if (enemiesInAttackArea == null || enemiesInAttackArea.Count == 0)
         {
-            // UŒ‚ƒŒ[ƒg‚ðƒŠƒZƒbƒg
-            attackCountDown = 0.0f;
             return;
         }
 
@@ -90,13 +93,13 @@ public class PlayerUnitController : MonoBehaviour
         if(pushDirectionButton)
         {
             // UŒ‚‚ðs‚¤
-            if (attackCountDown <= 0.0f/* && enemiesInAttackArea.Count != 0*/)
+            if (attackCountDown <= 0.0f /*&& enemiesInAttackArea.Count != 0*/)
             {
                 Attack();
                 attackCountDown = 1.0f / attackRate;
             }
         }
-        attackCountDown -= Time.deltaTime;
+        //attackCountDown -= Time.deltaTime;
     }
 
     /// <summary>
