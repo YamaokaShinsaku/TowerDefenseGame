@@ -20,10 +20,10 @@ public class PlayerUnitController : MonoBehaviour
 {
     [Header("Unit Setting")]
     // 現在の攻撃対象
-    [SerializeField]
-    private GameObject target;
+    //[SerializeField]
+    //private GameObject target;
     // 攻撃範囲
-    public float range = 15.0f;
+    //public float range = 15.0f;
     // 攻撃力
     public int attackValue = 1;
 
@@ -72,6 +72,8 @@ public class PlayerUnitController : MonoBehaviour
         //}
         if (enemiesInAttackArea == null || enemiesInAttackArea.Count == 0)
         {
+            // 攻撃レートをリセット
+            attackCountDown = 0.0f;
             return;
         }
 
@@ -88,7 +90,7 @@ public class PlayerUnitController : MonoBehaviour
         if(pushDirectionButton)
         {
             // 攻撃を行う
-            if (attackCountDown <= 0.0f && enemiesInAttackArea.Count != 0)
+            if (attackCountDown <= 0.0f/* && enemiesInAttackArea.Count != 0*/)
             {
                 Attack();
                 attackCountDown = 1.0f / attackRate;
@@ -110,6 +112,7 @@ public class PlayerUnitController : MonoBehaviour
         // 配列内の敵にダメージを与える
         foreach (GameObject enemies in enemiesInAttackArea)
         {
+            // 敵が存在していれば
             if(enemies != null)
             {
                 enemies.GetComponent<Enemy>().TakeDamage(attackValue);
@@ -141,7 +144,7 @@ public class PlayerUnitController : MonoBehaviour
         }
     }
 
-    // ボタンから呼ばれる方向決定を行う関数
+    // 方向決定を行う関数(ボタンから呼ばれる)
     public void SetFront()
     {
         direction = PlayerUnitDirection.Front;

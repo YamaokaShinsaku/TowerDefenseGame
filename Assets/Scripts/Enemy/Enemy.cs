@@ -83,6 +83,7 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Die()
     {
+        PlayerStats.cost++;
         Destroy(this.gameObject);
     }
 }
