@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     public int health = 10;
     // 移動速度
     public float speed = 10.0f;
+    // 死亡時のエフェクト
+    public GameObject dieEffect;
     // 移動先のオブジェクト
     private Transform target;
     // 現在の移動先オブジェクトの番号
@@ -83,7 +85,11 @@ public class Enemy : MonoBehaviour
     /// </summary>
     void Die()
     {
+        // 死亡エフェクトの再生
+        Instantiate(dieEffect, this.transform.position, Quaternion.identity);
+        // コストの加算
         PlayerStats.cost++;
+        // 自身を削除
         Destroy(this.gameObject);
     }
 }

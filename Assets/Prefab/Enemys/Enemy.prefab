@@ -113,6 +113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
   speed: 10
+  dieEffect: {fileID: 6663554705123069974, guid: 34c585477520e6846bf112103763dd39, type: 3}
 --- !u!54 &9018077991778338659
 Rigidbody:
   m_ObjectHideFlags: 0
