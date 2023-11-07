@@ -11,8 +11,12 @@ public class PlayerStats : MonoBehaviour
     // ‰ŠúƒRƒXƒg
     public int startCost = 10;
 
+    public static int life;
+    public int startLife = 20;
+
     private void Start()
     {
         cost = startCost;
+        life = startLife;
     }
 }

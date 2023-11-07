@@ -38,12 +38,23 @@ public class Enemy : MonoBehaviour
         // 最後のMovePointに到達したとき
         if(movePointIndex >= MovePoints.movePoints.Length - 1)
         {
-            Destroy(this.gameObject);
+            EndPoint();
             return;
         }
 
         movePointIndex++;
         // targetに次のMovePointを設定
         target = MovePoints.movePoints[movePointIndex];
+    }
+
+    /// <summary>
+    /// 終点に到達したときの処理
+    /// </summary>
+    void EndPoint()
+    {
+        // ライフを減算
+        PlayerStats.life--;
+        // 自身を削除
+        Destroy(this.gameObject);
     }
 }
