@@ -23,27 +23,31 @@ public class UnitCall : MonoBehaviour
     }
 
     /// <summary>
-    /// PlayerUnit1‚ğæ“¾
+    /// w’è‚Ì”Ô†‚ÌPlayerUnit‚ğæ“¾
     /// </summary>
-    public void SelectPlayerUnit1()
-    {
-        Debug.Log("Get PlayerUnit_1");
-        //BuildManager.instance.SelectPlayerUnitToBuild(unit1Data);
-        BuildManager.instance.SelectPlayerUnitToBuild(unitDatas[0]);
-    }
-
-    /// <summary>
-    /// PlayerUnit2‚ğæ“¾
-    /// </summary>
-    public void SelectPlayerUnit2()
-    {
-        Debug.Log("Get PlayerUnit_2");
-        //BuildManager.instance.SelectPlayerUnitToBuild(unit2Data);
-        BuildManager.instance.SelectPlayerUnitToBuild(unitDatas[1]);
-    }
-
+    /// <param name="unitNumber"></param>
     public void SelectUnit(int unitNumber)
     {
         BuildManager.instance.SelectPlayerUnitToBuild(unitDatas[unitNumber-1]);
     }
+    ///// <summary>
+    ///// PlayerUnit1‚ğæ“¾
+    ///// </summary>
+    //public void SelectPlayerUnit1()
+    //{
+    //    Debug.Log("Get PlayerUnit_1");
+    //    //BuildManager.instance.SelectPlayerUnitToBuild(unit1Data);
+    //    BuildManager.instance.SelectPlayerUnitToBuild(unitDatas[0]);
+    //}
+
+    ///// <summary>
+    ///// PlayerUnit2‚ğæ“¾
+    ///// </summary>
+    //public void SelectPlayerUnit2()
+    //{
+    //    Debug.Log("Get PlayerUnit_2");
+    //    //BuildManager.instance.SelectPlayerUnitToBuild(unit2Data);
+    //    BuildManager.instance.SelectPlayerUnitToBuild(unitDatas[1]);
+    //}
+
 }

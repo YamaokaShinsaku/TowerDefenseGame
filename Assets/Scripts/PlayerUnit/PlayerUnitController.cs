@@ -78,11 +78,27 @@ public class PlayerUnitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 配列内のオブジェクトがNullになれば削除する
+        // (敵が攻撃範囲内でDestroyされたときのための処理)
+        for (int i = 0; i < enemiesInAttackArea.Count; i++)
+        {
+            if (enemiesInAttackArea[i] == null)
+            {
+                enemiesInAttackArea.RemoveAt(i);
+            }
+        }
+
         if (enemiesInAttackArea == null || enemiesInAttackArea.Count == 0)
         {
             animator.SetBool("isSlow", false);
+            if(enemiesInAttackArea.Count <= 1)
+            {
+                attackCountDown = 0.0f;
+                return;
+            }
             return;
         }
+
         // 剣で攻撃する場合
         if (attackType == AttackType.Sword)
         {
@@ -92,23 +108,9 @@ public class PlayerUnitController : MonoBehaviour
                 attackCountDown = 0.0f;
             }
             // 攻撃対象が存在しない場合は、以降処理しない
-            //if (!target)
-            //{
-            //    return;
-            //}
             if (enemiesInAttackArea == null || enemiesInAttackArea.Count == 0)
             {
                 return;
-            }
-
-            // 配列内のオブジェクトがNullになれば削除する
-            // (敵が攻撃範囲内でDestroyされたときのための処理)
-            for (int i = 0; i < enemiesInAttackArea.Count; i++)
-            {
-                if (enemiesInAttackArea[i] == null)
-                {
-                    enemiesInAttackArea.RemoveAt(i);
-                }
             }
 
             if (pushDirectionButton)
@@ -237,7 +239,10 @@ public class PlayerUnitController : MonoBehaviour
                 // 配列内の敵の速度を減少させる
                 for (int i = 0; i < enemiesInAttackArea.Count; i++)
                 {
-                    enemiesInAttackArea[i].GetComponent<Enemy>().TakeSlowMagic(decelerationRate);
+                    if (enemiesInAttackArea[i] != null)
+                    {
+                        enemiesInAttackArea[i].GetComponent<Enemy>().TakeSlowMagic(decelerationRate);
+                    }
                 }
             }
         }
