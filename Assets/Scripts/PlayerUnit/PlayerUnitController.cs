@@ -14,6 +14,15 @@ public enum PlayerUnitDirection
 }
 
 /// <summary>
+/// プレイヤーユニットの攻撃方法
+/// </summary>
+public enum AttackType
+{
+    Sword,      // 剣
+    SlowMagic,  // 減速魔法
+}
+
+/// <summary>
 /// プレイヤーユニットの行動制御
 /// </summary>
 public class PlayerUnitController : MonoBehaviour
@@ -42,6 +51,8 @@ public class PlayerUnitController : MonoBehaviour
     private Transform createAttackEffectTransform;
     // プレイヤーユニットの向いている方向
     public PlayerUnitDirection  direction;
+    // 攻撃タイプ
+    public AttackType attackType;
     // 方向選択ボタンが押されたかどうか
     public bool pushDirectionButton = false;
 
@@ -67,41 +78,50 @@ public class PlayerUnitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        attackCountDown -= Time.deltaTime;
-        if(attackCountDown <= 0.0f)
-        {
-            attackCountDown = 0.0f;
-        }
-        // 攻撃対象が存在しない場合は、以降処理しない
-        //if (!target)
-        //{
-        //    return;
-        //}
         if (enemiesInAttackArea == null || enemiesInAttackArea.Count == 0)
         {
+            animator.SetBool("isSlow", false);
             return;
         }
-
-        // 配列内のオブジェクトがNullになれば削除する
-        // (敵が攻撃範囲内でDestroyされたときのための処理)
-        for (int i = 0; i < enemiesInAttackArea.Count; i++)
+        // 剣で攻撃する場合
+        if (attackType == AttackType.Sword)
         {
-            if (enemiesInAttackArea[i] == null)
+            attackCountDown -= Time.deltaTime;
+            if (attackCountDown <= 0.0f)
             {
-                enemiesInAttackArea.RemoveAt(i);
+                attackCountDown = 0.0f;
             }
-        }
+            // 攻撃対象が存在しない場合は、以降処理しない
+            //if (!target)
+            //{
+            //    return;
+            //}
+            if (enemiesInAttackArea == null || enemiesInAttackArea.Count == 0)
+            {
+                return;
+            }
 
-        if(pushDirectionButton)
-        {
-            // 攻撃を行う
-            if (attackCountDown <= 0.0f /*&& enemiesInAttackArea.Count != 0*/)
+            // 配列内のオブジェクトがNullになれば削除する
+            // (敵が攻撃範囲内でDestroyされたときのための処理)
+            for (int i = 0; i < enemiesInAttackArea.Count; i++)
             {
-                Attack();
-                attackCountDown = 1.0f / attackRate;
+                if (enemiesInAttackArea[i] == null)
+                {
+                    enemiesInAttackArea.RemoveAt(i);
+                }
             }
+
+            if (pushDirectionButton)
+            {
+                // 攻撃を行う
+                if (attackCountDown <= 0.0f /*&& enemiesInAttackArea.Count != 0*/)
+                {
+                    Attack();
+                    attackCountDown = 1.0f / attackRate;
+                }
+            }
+            //attackCountDown -= Time.deltaTime;
         }
-        //attackCountDown -= Time.deltaTime;
     }
 
     /// <summary>
@@ -127,6 +147,26 @@ public class PlayerUnitController : MonoBehaviour
         // 攻撃レートをリセット
         attackCountDown = 0.0f;
     }
+
+    //void Magic()
+    //{
+    //    //Debug.Log(this.gameObject.name + "Attack");
+    //    // 攻撃アニメーションを再生
+    //    animator.SetTrigger("isAttack");
+    //    //// 攻撃エフェクトを生成
+    //    //Instantiate(attackEffect, createAttackEffectTransform);
+    //    // 配列内の敵にダメージを与える
+    //    foreach (GameObject enemies in enemiesInAttackArea)
+    //    {
+    //        // 敵が存在していれば
+    //        if (enemies != null)
+    //        {
+    //            enemies.GetComponent<Enemy>().TakeSlowMagic(decelerationRate);
+    //        }
+    //    }
+    //    //// 攻撃レートをリセット
+    //    //attackCountDown = 0.0f;
+    //}
 
     /// <summary>
     /// プレイヤーの向きを設定
@@ -188,11 +228,18 @@ public class PlayerUnitController : MonoBehaviour
             //target = other.gameObject;
             // 敵を配列に追加
             enemiesInAttackArea.Add(other.gameObject);
-            //// 配列内の敵の速度を減少させる
-            //for(int i = 0; i  < enemiesInAttackArea.Count; i++)
-            //{
-            //    enemiesInAttackArea[i].GetComponent<Enemy>().Slow(decelerationRate);
-            //}
+            // 減速魔法を使用する場合
+            if(attackType == AttackType.SlowMagic)
+            {
+                // 攻撃アニメーションを再生
+                //animator.SetTrigger("isAttack");
+                animator.SetBool("isSlow", true);
+                // 配列内の敵の速度を減少させる
+                for (int i = 0; i < enemiesInAttackArea.Count; i++)
+                {
+                    enemiesInAttackArea[i].GetComponent<Enemy>().TakeSlowMagic(decelerationRate);
+                }
+            }
         }
     }
     // 攻撃範囲内から敵が出た時
@@ -200,6 +247,11 @@ public class PlayerUnitController : MonoBehaviour
     {
         if (other.gameObject.tag == enemyTag)
         {
+            // 減速魔法を使用する場合
+            if (attackType == AttackType.SlowMagic)
+            {
+                enemiesInAttackArea[0].GetComponent<Enemy>().InitMoveSpeed();
+            }
             //target = null;
             // 配列から削除する
             enemiesInAttackArea.RemoveAt(0);

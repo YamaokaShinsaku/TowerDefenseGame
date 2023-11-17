@@ -15,6 +15,7 @@ public class BuildManager : MonoBehaviour
     // 各プレイヤーユニットのPrefab
     public GameObject playerUnit1Prefab;
     public GameObject playerUnit2Prefab;
+    public GameObject playerUnit3Prefab;
 
     // プレイヤーユニット生成時のエフェクト
     //public GameObject buildEffect;

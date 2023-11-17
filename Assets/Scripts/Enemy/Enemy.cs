@@ -55,6 +55,15 @@ public class Enemy : MonoBehaviour
     }
 
     /// <summary>
+    /// Œ¸‘¬–‚–@‚ğó‚¯‚é
+    /// </summary>
+    /// <param name="decelerationValue">Œ¸‘¬—Ê</param>
+    public void TakeSlowMagic(float decelerationValue)
+    {
+        speed = startSpeed * (1.0f - decelerationValue);
+    }
+
+    /// <summary>
     /// €–S‚Ìˆ—
     /// </summary>
     void Die()

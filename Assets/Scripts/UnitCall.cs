@@ -41,4 +41,9 @@ public class UnitCall : MonoBehaviour
         //BuildManager.instance.SelectPlayerUnitToBuild(unit2Data);
         BuildManager.instance.SelectPlayerUnitToBuild(unitDatas[1]);
     }
+
+    public void SelectUnit(int unitNumber)
+    {
+        BuildManager.instance.SelectPlayerUnitToBuild(unitDatas[unitNumber-1]);
+    }
 }

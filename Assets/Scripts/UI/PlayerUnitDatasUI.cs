@@ -33,19 +33,19 @@ public class PlayerUnitDatasUI : MonoBehaviour
     /// <param name="index">表示するUIの番号</param>
     public void ShowPlayerUnitDatasUI(int index)
     {
-        playerDatasUI[index].SetActive(true);
+        playerDatasUI[index - 1].SetActive(true);
     }
 
     /// <summary>
     /// 指定のプレイヤーユニットのデータUIを非表示にする
     /// </summary>
-    /// <param name="index">表示するUIの番号</param>
+    /// <param name="index">非表示するUIの番号</param>
     public void HidePlayerUnitDatasUI(int index)
     {
         // 指定のUIが表示されている場合
-        if (playerDatasUI[index].activeInHierarchy)
+        if (playerDatasUI[index -1].activeInHierarchy)
         {
-            playerDatasUI[index].SetActive(false);
+            playerDatasUI[index - 1].SetActive(false);
         }
     }
 
