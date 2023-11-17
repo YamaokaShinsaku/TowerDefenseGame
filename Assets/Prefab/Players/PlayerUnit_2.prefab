@@ -2243,11 +2243,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90583537646f0c34f8831ab73f62c663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  range: 15
   attackValue: 3
   attackRate: 0.5
   attackCountDown: 0
+  decelerationRate: 0.8
   attackEffect: {fileID: 7226583673155636401, guid: 6fcc91cf401964544b6c5877c4f936a6, type: 3}
   createAttackEffectTransform: {fileID: 1337164063604913186}
   direction: 0

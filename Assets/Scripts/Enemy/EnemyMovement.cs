@@ -32,6 +32,8 @@ public class EnemyMovement : MonoBehaviour
         {
             GetNextMovePoint();
         }
+        // ˆÚ“®‘¬“x‚Ì‰Šú‰»
+        //enemy.speed = enemy.startSpeed;
     }
 
     /// <summary>

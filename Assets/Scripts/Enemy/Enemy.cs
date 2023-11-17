@@ -7,11 +7,18 @@ public class Enemy : MonoBehaviour
 {
     // 体力
     public int health = 10;
+    // 初期移動速度
+    public float startSpeed = 10.0f;
     // 移動速度
+
     public float speed = 10.0f;
     // 死亡時のエフェクト
     public GameObject dieEffect;
 
+    private void Start()
+    {
+        speed = startSpeed;
+    }
 
     /// <summary>
     /// ダメージを受ける
@@ -26,6 +33,25 @@ public class Enemy : MonoBehaviour
         {
             Die();
         }
+    }
+
+    /// <summary>
+    /// 攻撃を受けた際に、一定時間減速する
+    /// </summary>
+    /// <param name="decelerationValue">減速量</param>
+    public void Slow(float decelerationValue)
+    {
+        speed = startSpeed * (1.0f - decelerationValue);
+
+        Invoke("InitMoveSpeed", 0.5f);
+    }
+
+    /// <summary>
+    /// 移動速度の初期化
+    /// </summary>
+    public void InitMoveSpeed()
+    {
+        speed = startSpeed;
     }
 
     /// <summary>

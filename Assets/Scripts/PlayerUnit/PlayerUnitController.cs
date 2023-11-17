@@ -32,6 +32,8 @@ public class PlayerUnitController : MonoBehaviour
     // 攻撃までのカウントダウン
     [SerializeField]
     private float attackCountDown = 0.0f;
+    // 敵の減速率
+    public float decelerationRate = 0.5f;
 
     // 攻撃エフェクト
     public GameObject attackEffect;
@@ -119,7 +121,8 @@ public class PlayerUnitController : MonoBehaviour
             if(enemies != null)
             {
                 enemies.GetComponent<Enemy>().TakeDamage(attackValue);
-            }   
+                enemies.GetComponent<Enemy>().Slow(decelerationRate);
+            }
         }
         // 攻撃レートをリセット
         attackCountDown = 0.0f;
@@ -185,6 +188,11 @@ public class PlayerUnitController : MonoBehaviour
             //target = other.gameObject;
             // 敵を配列に追加
             enemiesInAttackArea.Add(other.gameObject);
+            //// 配列内の敵の速度を減少させる
+            //for(int i = 0; i  < enemiesInAttackArea.Count; i++)
+            //{
+            //    enemiesInAttackArea[i].GetComponent<Enemy>().Slow(decelerationRate);
+            //}
         }
     }
     // 攻撃範囲内から敵が出た時
