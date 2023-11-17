@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!1102 &-7983183619009911533
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -21,8 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: c1c0db79d17619b478187a0a71a8c18e,
-    type: 3}
+  m_Motion: {fileID: 1827226128182048838, guid: c1c0db79d17619b478187a0a71a8c18e, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -52,7 +51,7 @@ AnimatorStateTransition:
   m_CanTransitionToSelf: 1
 --- !u!1102 &-1588554032480672602
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -71,8 +70,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: 8346933d3bd290f4eab9ae459292ea11,
-    type: 3}
+  m_Motion: {fileID: 1827226128182048838, guid: 8346933d3bd290f4eab9ae459292ea11, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -102,7 +100,7 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
 --- !u!1102 &714587645964514663
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -120,8 +118,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: 2a53d46edaf15e74581adfd57be1ae07,
-    type: 3}
+  m_Motion: {fileID: 1827226128182048838, guid: 2a53d46edaf15e74581adfd57be1ae07, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -129,7 +126,7 @@ AnimatorState:
   m_TimeParameter: 
 --- !u!1107 &777285933420096388
 AnimatorStateMachine:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -157,7 +154,7 @@ AnimatorStateMachine:
   m_DefaultState: {fileID: -1588554032480672602}
 --- !u!1102 &3820606113706632552
 AnimatorState:
-  serializedVersion: 5
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -176,8 +173,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 1827226128182048838, guid: 3fe01930ef742884f9fccec548082775,
-    type: 3}
+  m_Motion: {fileID: 1827226128182048838, guid: 3fe01930ef742884f9fccec548082775, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
