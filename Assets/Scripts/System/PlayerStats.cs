@@ -28,6 +28,7 @@ public class PlayerStats : MonoBehaviour
         if(cost > limitCost)
         {
             cost = limitCost;
+            return;
         }
     }
 }
