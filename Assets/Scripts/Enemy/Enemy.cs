@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damageValue)
     {
         health -= damageValue;
-        Debug.Log("ダメージを受けた");
+        //Debug.Log("ダメージを受けた");
         // 体力が0になったとき
         if(health <= 0)
         {

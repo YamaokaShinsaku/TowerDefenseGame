@@ -78,6 +78,11 @@ public class PlayerUnitController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        attackCountDown -= Time.deltaTime;
+        if(attackCountDown < 0.0f)
+        {
+            attackCountDown = 0.0f;
+        }
         // 配列内のオブジェクトがNullになれば削除する
         // (敵が攻撃範囲内でDestroyされたときのための処理)
         for (int i = 0; i < enemiesInAttackArea.Count; i++)
@@ -91,18 +96,13 @@ public class PlayerUnitController : MonoBehaviour
         if (enemiesInAttackArea == null || enemiesInAttackArea.Count == 0)
         {
             animator.SetBool("isSlow", false);
-            if(enemiesInAttackArea.Count <= 1)
-            {
-                attackCountDown = 0.0f;
-                return;
-            }
             return;
         }
 
         // 剣で攻撃する場合
         if (attackType == AttackType.Sword)
         {
-            attackCountDown -= Time.deltaTime;
+            //attackCountDown -= Time.deltaTime;
             if (attackCountDown <= 0.0f)
             {
                 attackCountDown = 0.0f;
