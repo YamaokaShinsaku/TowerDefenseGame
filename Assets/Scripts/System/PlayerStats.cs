@@ -8,6 +8,8 @@ public class PlayerStats : MonoBehaviour
 {
     // プレイヤーが持っているコスト
     public static int cost;
+    // costの上限
+    static int limitCost = 99;
     // 初期コスト
     public int startCost = 10;
 
@@ -18,5 +20,14 @@ public class PlayerStats : MonoBehaviour
     {
         cost = startCost;
         life = startLife;
+    }
+
+    private void Update()
+    {
+        // Costが上限を超えないように
+        if(cost > limitCost)
+        {
+            cost = limitCost;
+        }
     }
 }
