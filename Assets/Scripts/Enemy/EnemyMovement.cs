@@ -9,7 +9,11 @@ public class EnemyMovement : MonoBehaviour
     // 移動先のオブジェクト
     private Transform target;
     // 現在の移動先オブジェクトの番号
+    [SerializeField]
     private int movePointIndex = 0;
+    [SerializeField]
+    // 使用するルートのインデックス
+    private int routeIndex = 0;
 
     private Enemy enemy;
 
@@ -17,7 +21,8 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         enemy = GetComponent<Enemy>();
-        target = MovePoints.movePoints[0];
+        target = MovePoints.movePoints[routeIndex][movePointIndex];
+        //SetNextTarget();
     }
 
     // Update is called once per frame
@@ -34,6 +39,14 @@ public class EnemyMovement : MonoBehaviour
         }
         // 移動速度の初期化
         //enemy.speed = enemy.startSpeed;
+        Debug.Log(movePointIndex);
+    }
+
+    // 次のターゲットを設定するメソッド
+    private void SetNextTarget()
+    {
+        Transform[] currentRoutePoints = MovePoints.movePoints[routeIndex];
+        target = currentRoutePoints[movePointIndex];
     }
 
     /// <summary>
@@ -41,16 +54,21 @@ public class EnemyMovement : MonoBehaviour
     /// </summary>
     void GetNextMovePoint()
     {
+        // 現在のルート内で、全移動ポイントの数を取得する
+        Transform[] currentRoutePoints = MovePoints.movePoints[routeIndex];
+
         // 最後のMovePointに到達したとき
-        if (movePointIndex >= MovePoints.movePoints.Length - 1)
+        if (movePointIndex >= currentRoutePoints.Length - 1)
         {
+            Debug.Log($"{movePointIndex}{currentRoutePoints.Length - 1}");
             EndPoint();
             return;
         }
 
         movePointIndex++;
         // targetに次のMovePointを設定
-        target = MovePoints.movePoints[movePointIndex];
+        //target = currentRoutePoints[movePointIndex];
+        SetNextTarget();
     }
 
     /// <summary>
@@ -60,6 +78,7 @@ public class EnemyMovement : MonoBehaviour
     {
         // ライフを減算
         PlayerStats.life--;
+        Debug.Log("Enemy Goal");
         // 自身を削除
         Destroy(this.gameObject);
     }

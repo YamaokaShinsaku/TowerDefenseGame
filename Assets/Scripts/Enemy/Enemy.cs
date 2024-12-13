@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
         health -= damageValue;
         //Debug.Log("ダメージを受けた");
         // 体力が0になったとき
-        if(health <= 0)
+        if (health <= 0)
         {
             Die();
         }
@@ -72,6 +72,7 @@ public class Enemy : MonoBehaviour
         Instantiate(dieEffect, this.transform.position, Quaternion.identity);
         // コストの加算
         PlayerStats.cost++;
+        Debug.Log("Enemy Deth");
         // 自身を削除
         Destroy(this.gameObject);
     }
