@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -21,8 +22,9 @@ public class EnemyMovement : MonoBehaviour
     void Start()
     {
         enemy = GetComponent<Enemy>();
-        target = MovePoints.movePoints[routeIndex][movePointIndex];
-        //SetNextTarget();
+        //target = MovePoints.movePoints[routeIndex][movePointIndex];
+        SetNextTarget();
+        routeIndex = enemy.routeIndex;
     }
 
     // Update is called once per frame
@@ -45,7 +47,7 @@ public class EnemyMovement : MonoBehaviour
     // 次のターゲットを設定するメソッド
     private void SetNextTarget()
     {
-        Transform[] currentRoutePoints = MovePoints.movePoints[routeIndex];
+        List<Transform> currentRoutePoints = MovePoints.movePoints[enemy.routeIndex];
         target = currentRoutePoints[movePointIndex];
     }
 
@@ -55,12 +57,12 @@ public class EnemyMovement : MonoBehaviour
     void GetNextMovePoint()
     {
         // 現在のルート内で、全移動ポイントの数を取得する
-        Transform[] currentRoutePoints = MovePoints.movePoints[routeIndex];
+        List<Transform> currentRoutePoints = MovePoints.movePoints[enemy.routeIndex];
 
         // 最後のMovePointに到達したとき
-        if (movePointIndex >= currentRoutePoints.Length - 1)
+        if (movePointIndex >= currentRoutePoints.Count - 1)
         {
-            Debug.Log($"{movePointIndex}{currentRoutePoints.Length - 1}");
+            Debug.Log($"{movePointIndex}{currentRoutePoints.Count - 1}");
             EndPoint();
             return;
         }

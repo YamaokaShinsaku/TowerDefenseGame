@@ -13,6 +13,8 @@ public class WaveSpawner : MonoBehaviour
     // ウェーブ間の時間
     public float timeBetweenWaves = 5.0f;
     public Text waceCountDownText;
+    // 最大ウェーブ数
+    public int maxWave = 10;
 
     private float countDown = 2.0f;
 

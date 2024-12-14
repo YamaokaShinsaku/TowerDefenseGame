@@ -5,19 +5,24 @@ using UnityEngine;
 /// </summary>
 public class Enemy : MonoBehaviour
 {
+    public EnemyUnitData enemyUnitData;
+
     // 体力
     public int health = 10;
     // 初期移動速度
     public float startSpeed = 10.0f;
     // 移動速度
-
     public float speed = 10.0f;
+    // ルート
+    public int routeIndex = 0;
     // 死亡時のエフェクト
     public GameObject dieEffect;
 
     private void Start()
     {
         speed = startSpeed;
+        enemyUnitData.SetRouteBasedOnType();
+        routeIndex = enemyUnitData.routeIndex;
     }
 
     /// <summary>
