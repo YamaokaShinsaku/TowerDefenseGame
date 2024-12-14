@@ -41,7 +41,7 @@ public class EnemyMovement : MonoBehaviour
         }
         // 移動速度の初期化
         //enemy.speed = enemy.startSpeed;
-        Debug.Log(movePointIndex);
+        //Debug.Log(movePointIndex);
     }
 
     // 次のターゲットを設定するメソッド
@@ -62,7 +62,7 @@ public class EnemyMovement : MonoBehaviour
         // 最後のMovePointに到達したとき
         if (movePointIndex >= currentRoutePoints.Count - 1)
         {
-            Debug.Log($"{movePointIndex}{currentRoutePoints.Count - 1}");
+            //Debug.Log($"{movePointIndex}{currentRoutePoints.Count - 1}");
             EndPoint();
             return;
         }
@@ -80,7 +80,7 @@ public class EnemyMovement : MonoBehaviour
     {
         // ライフを減算
         PlayerStats.life--;
-        Debug.Log("Enemy Goal");
+        //Debug.Log("Enemy Goal");
         // 自身を削除
         Destroy(this.gameObject);
     }

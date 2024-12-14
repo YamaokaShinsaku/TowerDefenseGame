@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
+using static EnemyUnitData;
 
 /// <summary>
 /// 各ウェーブごとにエネミーの数などを設定する
@@ -8,11 +10,12 @@ using System.Collections;
 public class WaveSpawner : MonoBehaviour
 {
     // スポーンさせるEnemy
-    public GameObject enemyPrefab;
+    public List<GameObject> enemyPrefabs;
     public Transform spawnPoint;
     // ウェーブ間の時間
     public float timeBetweenWaves = 5.0f;
-    public Text waceCountDownText;
+    public Text waveCountDownText;
+    public Text waveCountText;
     // 最大ウェーブ数
     public int maxWave = 10;
 
@@ -21,18 +24,26 @@ public class WaveSpawner : MonoBehaviour
     // Wave番号
     private int waveNumber = 0;
 
+    public List<WaveData> waves;
+
+    private bool waveInProgress = false;
+
     void Update()
     {
-        if(countDown <= 0.0f)
+        if(!waveInProgress && countDown <= 0.0f)
         {
-            // ウェーブを生成する
-            StartCoroutine(CreateWave());
-            countDown = timeBetweenWaves;
+            if(waveNumber < maxWave)
+            {
+                // ウェーブを生成する
+                StartCoroutine(CreateWave());
+                countDown = timeBetweenWaves;
+            }
         }
 
         countDown -= Time.deltaTime;
         countDown = Mathf.Clamp(countDown, 0.0f, Mathf.Infinity);
-        waceCountDownText.text = string.Format("{0:00.00}", countDown);
+        waveCountDownText.text = string.Format("{0:00.00}", countDown);
+        waveCountText.text =  waveNumber.ToString();
     }
 
     /// <summary>
@@ -42,21 +53,49 @@ public class WaveSpawner : MonoBehaviour
     {
         waveNumber++;
         Debug.Log("Create Wave " + waveNumber);
-        for(int i = 0; i < waveNumber; i++) 
+        waveInProgress = true;
+        var nextWaveIntarval = 0.0f;
+
+        // 現在のウェーブの設定を取得
+        if(waveNumber - 1 < waves.Count)
         {
-            SpawnEnemy();
-            yield return new WaitForSeconds(0.5f);
+            WaveData currentWaveData = waves[waveNumber - 1];
+            nextWaveIntarval = currentWaveData.waveIntarval;
+            for (int i = 0; i < currentWaveData.enemyCount; i++)
+            {
+                SpawnEnemy(currentWaveData.enemyType);
+                yield return new WaitForSeconds(currentWaveData.spawnIntarval);
+            }
         }
+
+        // ウェーブ完了後の待機時間
+        yield return new WaitForSeconds(nextWaveIntarval);
+        // 次のウェーブまでのカウントダウンをリセット
+        countDown = 0;
+        waveInProgress = false;
     }
 
     /// <summary>
     /// Enemyを生成する
     /// </summary>
-    void SpawnEnemy()
+    void SpawnEnemy(EnemyUnitData.EnemyType enemyType)
     {
-        int count = 0;
-        GameObject clone = Instantiate(enemyPrefab, spawnPoint.position, spawnPoint.rotation);
-        count++;
-        clone.name = clone.name + count.ToString();
+        if(enemyPrefabs.Count == 0)
+        {
+            return;
+        }
+
+        // 対応するエネミーを選択
+        GameObject chosenEnemy = enemyPrefabs.Find(enemy => enemy.GetComponent<Enemy>().enemyUnitData.enemyType == enemyType);
+
+        if (chosenEnemy != null)
+        {
+            GameObject clone = Instantiate(chosenEnemy, spawnPoint.position, spawnPoint.rotation);
+            clone.name = chosenEnemy.name + "_" + (waveNumber - 1) + "_" + (Time.frameCount % 100); // ユニークな名前
+        }
+        else
+        {
+            Debug.LogWarning($"No enemy found for type: {enemyType}. Double-check your enemy prefabs.");
+        }
     }
 }
