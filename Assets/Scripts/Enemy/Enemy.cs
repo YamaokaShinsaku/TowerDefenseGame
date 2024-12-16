@@ -77,7 +77,6 @@ public class Enemy : MonoBehaviour
         Instantiate(dieEffect, this.transform.position, Quaternion.identity);
         // コストの加算
         PlayerStats.cost++;
-        Debug.Log("Enemy Deth");
         // 自身を削除
         Destroy(this.gameObject);
     }

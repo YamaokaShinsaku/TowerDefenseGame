@@ -30,9 +30,9 @@ public class WaveSpawner : MonoBehaviour
 
     void Update()
     {
-        if(!waveInProgress && countDown <= 0.0f)
+        if (!waveInProgress && countDown <= 0.0f)
         {
-            if(waveNumber < maxWave)
+            if (waveNumber < maxWave)
             {
                 // ウェーブを生成する
                 StartCoroutine(CreateWave());
@@ -43,7 +43,7 @@ public class WaveSpawner : MonoBehaviour
         countDown -= Time.deltaTime;
         countDown = Mathf.Clamp(countDown, 0.0f, Mathf.Infinity);
         waveCountDownText.text = string.Format("{0:00.00}", countDown);
-        waveCountText.text =  waveNumber.ToString();
+        waveCountText.text = waveNumber.ToString();
     }
 
     /// <summary>
@@ -57,7 +57,7 @@ public class WaveSpawner : MonoBehaviour
         var nextWaveIntarval = 0.0f;
 
         // 現在のウェーブの設定を取得
-        if(waveNumber - 1 < waves.Count)
+        if (waveNumber - 1 < waves.Count)
         {
             WaveData currentWaveData = waves[waveNumber - 1];
             nextWaveIntarval = currentWaveData.waveIntarval;
@@ -78,9 +78,9 @@ public class WaveSpawner : MonoBehaviour
     /// <summary>
     /// Enemyを生成する
     /// </summary>
-    void SpawnEnemy(EnemyUnitData.EnemyType enemyType)
+    void SpawnEnemy(EnemyType enemyType)
     {
-        if(enemyPrefabs.Count == 0)
+        if (enemyPrefabs.Count == 0)
         {
             return;
         }
@@ -91,7 +91,7 @@ public class WaveSpawner : MonoBehaviour
         if (chosenEnemy != null)
         {
             GameObject clone = Instantiate(chosenEnemy, spawnPoint.position, spawnPoint.rotation);
-            clone.name = chosenEnemy.name + "_" + (waveNumber - 1) + "_" + (Time.frameCount % 100); // ユニークな名前
+            clone.name = chosenEnemy.name + "_" + (waveNumber - 1);
         }
         else
         {
