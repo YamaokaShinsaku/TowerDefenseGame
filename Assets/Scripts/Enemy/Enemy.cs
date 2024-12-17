@@ -26,8 +26,8 @@ public class Enemy : MonoBehaviour
     {
         speed = startSpeed;
         health = startHealth;
-        enemyUnitData.SetRouteBasedOnType();
-        routeIndex = enemyUnitData.routeIndex;
+        //enemyUnitData.SetRouteBasedOnType();
+        //routeIndex = enemyUnitData.routeIndex;
     }
 
     /// <summary>

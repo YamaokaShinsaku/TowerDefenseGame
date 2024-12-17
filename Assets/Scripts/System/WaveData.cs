@@ -13,11 +13,14 @@ public class WaveData
     public float spawnIntarval;
     // 次回のウェーブ開始までの間隔
     public float waveIntarval;
+    // エネミーのルート
+    public int enemyRoute;
 
-    public WaveData(EnemyUnitData.EnemyType enemyType, int enemyCount, float spawnIntarval)
+    public WaveData(EnemyUnitData.EnemyType enemyType, int enemyCount, float spawnIntarval, int routeIndex)
     {
         this.enemyType = enemyType;
         this.enemyCount = enemyCount;
         this.spawnIntarval = spawnIntarval;
+        enemyRoute = routeIndex;
     }
 }

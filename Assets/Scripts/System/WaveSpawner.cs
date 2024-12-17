@@ -63,7 +63,7 @@ public class WaveSpawner : MonoBehaviour
             nextWaveIntarval = currentWaveData.waveIntarval;
             for (int i = 0; i < currentWaveData.enemyCount; i++)
             {
-                SpawnEnemy(currentWaveData.enemyType);
+                SpawnEnemy(currentWaveData.enemyType, currentWaveData.enemyRoute);
                 yield return new WaitForSeconds(currentWaveData.spawnIntarval);
             }
         }
@@ -78,7 +78,7 @@ public class WaveSpawner : MonoBehaviour
     /// <summary>
     /// EnemyÇê∂ê¨Ç∑ÇÈ
     /// </summary>
-    void SpawnEnemy(EnemyType enemyType)
+    void SpawnEnemy(EnemyType enemyType, int routeIndex)
     {
         if (enemyPrefabs.Count == 0)
         {
@@ -92,6 +92,7 @@ public class WaveSpawner : MonoBehaviour
         {
             GameObject clone = Instantiate(chosenEnemy, spawnPoint.position, spawnPoint.rotation);
             clone.name = chosenEnemy.name + "_" + (waveNumber - 1);
+            chosenEnemy.GetComponent<Enemy>().routeIndex = routeIndex;
         }
         else
         {

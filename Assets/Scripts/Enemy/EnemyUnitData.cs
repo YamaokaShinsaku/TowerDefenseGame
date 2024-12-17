@@ -13,6 +13,9 @@ public class EnemyUnitData
     {
         Type1,
         Type2,
+        Type3,
+        Type4,
+        Type5,
     }
     [HideInInspector]
     public int routeIndex = 0;
