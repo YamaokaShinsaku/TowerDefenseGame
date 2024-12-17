@@ -11,6 +11,8 @@ public class BuildManager : MonoBehaviour
     // 配置するプレイヤーユニット
     //public GameObject playerUnitToBuild;
     private PlayerUnitData unitDataToBuild;
+    private Node selectNode;
+    public NodeUI nodeUI;
 
     // 各プレイヤーユニットのPrefab
     //public GameObject playerUnit1Prefab;
@@ -23,11 +25,11 @@ public class BuildManager : MonoBehaviour
     // プレイヤーユニットを設置できるかどうか
     public bool canBuildPlayerUnit { get { return unitDataToBuild != null; } }
     // コストが足りているかどうか
-    public bool hasMoney { get { return PlayerStats.cost >= unitDataToBuild.cost; } }
+    public bool hasCost { get { return PlayerStats.cost >= unitDataToBuild.cost; } }
 
     private void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Debug.Log("BuildManagerがすでに存在しています");
             return;
@@ -42,6 +44,7 @@ public class BuildManager : MonoBehaviour
     public void SelectPlayerUnitToBuild(PlayerUnitData playerunitDataToBuild)
     {
         unitDataToBuild = playerunitDataToBuild;
+        DeselectNode();
     }
 
     /// <summary>
@@ -49,7 +52,7 @@ public class BuildManager : MonoBehaviour
     /// </summary>
     public void DeletePlayerUnitToBuild()
     {
-        if(unitDataToBuild != null)
+        if (unitDataToBuild != null)
         {
             unitDataToBuild = null;
         }
@@ -61,7 +64,7 @@ public class BuildManager : MonoBehaviour
     /// <param name="node">Node</param>
     public void BuildPlayerUnitOnNode(Node node)
     {
-        if(PlayerStats.cost < unitDataToBuild.cost)
+        if (PlayerStats.cost < unitDataToBuild.cost)
         {
             Debug.Log("設置コストが足りません");
             return;
@@ -81,5 +84,25 @@ public class BuildManager : MonoBehaviour
         unitDataToBuild = null;
 
         Debug.Log("残りコスト　: " + PlayerStats.cost);
+    }
+
+    public void SelectNode(Node node)
+    {
+        if (selectNode == node)
+        {
+            DeselectNode();
+            return;
+        }
+
+        selectNode = node;
+        unitDataToBuild = null;
+
+        nodeUI.SetTarget(node);
+    }
+
+    public void DeselectNode()
+    {
+        selectNode = null;
+        nodeUI.HideUI();
     }
 }

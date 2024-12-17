@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,6 +9,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
 {
     // 選択されたときのColor
     public Color hoverColor;
+
     // 必要なコストが足りないときのColor
     public Color notEnoughCostcolor;
     // 初期のColorを保存する
@@ -33,18 +35,19 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
     /// <param name="eventData"></param>
     public void OnPointerDown(PointerEventData eventData)
     {
+        // プレイヤーユニットが存在する場合
+        if (playerUnit != null)
+        {
+            //Debug.Log("ここには配置できません");
+            BuildManager.instance.SelectNode(this);
+            return;
+        }
         // プレイヤーユニットが設置できない場合
         if (!BuildManager.instance.canBuildPlayerUnit)
         {
             return;
         }
 
-        // プレイヤーユニットが存在する場合
-        if (playerUnit != null)
-        {
-            Debug.Log("ここには配置できません");
-            return;
-        }
         // プレイヤーユニットを設置する
         BuildManager.instance.BuildPlayerUnitOnNode(this);
 
@@ -63,7 +66,7 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
             return;
         }
 
-        if(BuildManager.instance.hasMoney)
+        if (BuildManager.instance.hasCost)
         {
             // Colorを変更する
             renderer.material.color = hoverColor;
@@ -90,21 +93,35 @@ public class Node : MonoBehaviour, IPointerDownHandler, IPointerExitHandler, IPo
         //Destroy(clone);
     }
 
-    ///// <summary>
-    ///// オブジェクト選択中にマウスボタンが押されたとき呼ばれる
-    ///// </summary>
+    /// <summary>
+    /// 設置する座標を取得
+    /// </summary>
+    /// <returns></returns>
+    public Vector3 GetBuildPosition()
+    {
+        return transform.position + builPositonOffset;
+    }
+
+    public void ReturnUnit()
+    {
+        Destroy(playerUnit);
+    }
+
+    /// <summary>
+    /// オブジェクト選択中にマウスボタンが押されたとき呼ばれる
+    /// </summary>
     //private void OnMouseDown()
     //{
     //    // プレイヤーユニットが存在する場合
-    //    if(playerUnit != null) 
+    //    if (playerUnit != null)
     //    {
     //        Debug.Log("ここには配置できません");
     //        return;
     //    }
 
-    //    // 配置するプレイヤーユニットを取得
-    //    GameObject playerUnitToBuild = BuildManager.instance.GetPlayerUnitToBuild();
-    //    playerUnit = Instantiate(playerUnitToBuild, this.transform.position + builPositonOffset, this.transform.rotation);
+    //    //// 配置するプレイヤーユニットを取得
+    //    //GameObject playerUnitToBuild = BuildManager.instance.GetPlayerUnitToBuild();
+    //    //playerUnit = Instantiate(playerUnitToBuild, this.transform.position + builPositonOffset, this.transform.rotation);
     //}
 
     ///// <summary>
