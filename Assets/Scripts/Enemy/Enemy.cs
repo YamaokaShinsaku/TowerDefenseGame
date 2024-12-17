@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 敵のデータ管理
@@ -8,7 +9,8 @@ public class Enemy : MonoBehaviour
     public EnemyUnitData enemyUnitData;
 
     // 体力
-    public int health = 10;
+    public float startHealth = 10;
+    private float health;
     // 初期移動速度
     public float startSpeed = 10.0f;
     // 移動速度
@@ -17,10 +19,13 @@ public class Enemy : MonoBehaviour
     public int routeIndex = 0;
     // 死亡時のエフェクト
     public GameObject dieEffect;
+    // 体力ゲージ
+    public Image healthBar;
 
     private void Start()
     {
         speed = startSpeed;
+        health = startHealth;
         enemyUnitData.SetRouteBasedOnType();
         routeIndex = enemyUnitData.routeIndex;
     }
@@ -32,6 +37,8 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damageValue)
     {
         health -= damageValue;
+
+        healthBar.fillAmount = health / startHealth;
         //Debug.Log("ダメージを受けた");
         // 体力が0になったとき
         if (health <= 0)
