@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using System.IO;
 
 /// <summary>
 /// Hierarchy上のオブジェクトに背景色・メモを追加する拡張機能
@@ -9,6 +10,8 @@ public class HierarchyMemoColorEditor : EditorWindow
 {
     // メモと色を保持するディクショナリー
     private static Dictionary<int, (string memo, Color color)> objectSettings = new Dictionary<int, (string, Color)>();
+    private const string settingsFileName = "hierarchyMemoColorSettings.json";
+
     private GameObject selectedObject;
 
     private string memo = "Enter memo here...";
@@ -46,12 +49,14 @@ public class HierarchyMemoColorEditor : EditorWindow
     {
         // 選択が変更されるたびにOnSelectionChangeメソッドを呼び出す
         Selection.selectionChanged += OnSelectionChange;
+        LoadSettings();
     }
 
     private void OnDisable()
     {
         // 不要になったので、選択が変更されたときのイベントを解除
         Selection.selectionChanged -= OnSelectionChange;
+        SaveSettings();
     }
 
     private void OnSelectionChange()
@@ -160,6 +165,7 @@ public class HierarchyMemoColorEditor : EditorWindow
         objectSettings[instanceID] = (memo, color);
         // オブジェクトをdirtyにする
         EditorUtility.SetDirty(selectedObject);
+        SaveSettings();
         Debug.Log($"Applied memo and color to {selectedObject.name}");
     }
 
@@ -173,7 +179,25 @@ public class HierarchyMemoColorEditor : EditorWindow
         objectSettings.Remove(instanceID);
         // オブジェクトをdirtyにする
         EditorUtility.SetDirty(selectedObject);
+        SaveSettings();
         Debug.Log($"Reset settings for {selectedObject.name}");
+    }
+
+    private void SaveSettings()
+    {
+        string json = JsonUtility.ToJson(new SerializableDictionary(objectSettings));
+        File.WriteAllText(Path.Combine(Application.persistentDataPath, settingsFileName), json);
+    }
+
+    private void LoadSettings()
+    {
+        string path = Path.Combine(Application.persistentDataPath, settingsFileName);
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            SerializableDictionary data = JsonUtility.FromJson<SerializableDictionary>(json);
+            objectSettings = data.ToDictionary();
+        }
     }
 
     [InitializeOnLoad]
@@ -201,4 +225,38 @@ public class HierarchyMemoColorEditor : EditorWindow
             }
         }
     }
+    // 直列化可能なディクショナリを定義
+    [System.Serializable]
+    private class SerializableDictionary
+    {
+        public List<KeyValue> entries;
+
+        public SerializableDictionary(Dictionary<int, (string memo, Color color)> dictionary)
+        {
+            entries = new List<KeyValue>();
+            foreach (var kvp in dictionary)
+            {
+                entries.Add(new KeyValue { key = kvp.Key, memo = kvp.Value.memo, color = kvp.Value.color });
+            }
+        }
+
+        public Dictionary<int, (string memo, Color color)> ToDictionary()
+        {
+            var dict = new Dictionary<int, (string memo, Color color)>();
+            foreach (var entry in entries)
+            {
+                dict[entry.key] = (entry.memo, entry.color);
+            }
+            return dict;
+        }
+    }
+
+    [System.Serializable]
+    private class KeyValue
+    {
+        public int key;
+        public string memo;
+        public Color color;
+    }
+
 }
