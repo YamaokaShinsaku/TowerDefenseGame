@@ -2,6 +2,9 @@
 using UnityEditor;
 using System.Collections.Generic;
 
+/// <summary>
+/// Hierarchy上のオブジェクトに背景色・メモを追加する拡張機能
+/// </summary>
 public class HierarchyMemoColorEditor : EditorWindow
 {
     // メモと色を保持するディクショナリー
@@ -20,7 +23,7 @@ public class HierarchyMemoColorEditor : EditorWindow
         ("Yellow", Color.yellow),
         ("Cyan", Color.cyan),
         ("Magenta", Color.magenta),
-        ("Orange", new Color(1.0f, 0.647f, 0.0f)) // RGB値でオレンジ
+        ("Orange", new Color(1.0f, 0.647f, 0.0f))
     };
 
     // スクロールに使用する変数
@@ -66,16 +69,16 @@ public class HierarchyMemoColorEditor : EditorWindow
             else
             {
                 memo = "Enter memo here...";
-                color = Color.white; // デフォルト色
+                color = Color.white;
             }
         }
         else
         {
             memo = "Enter memo here...";
-            color = Color.white; // デフォルト色
+            color = Color.white;
         }
-
-        Repaint(); // ウィンドウを再描画
+        // ウィンドウを再描画
+        Repaint();
     }
 
     private void OnGUI()
@@ -87,16 +90,20 @@ public class HierarchyMemoColorEditor : EditorWindow
             int instanceID = selectedObject.GetInstanceID();
 
             // 色の設定
-            EditorGUILayout.BeginVertical("box"); // 色の設定部分を囲む枠
-            GUILayout.Label("Color Presets", EditorStyles.boldLabel); // 太字で表示
+            // 色の設定部分を囲む枠
+            EditorGUILayout.BeginVertical("box");
+            // 太字で表示
+            GUILayout.Label("Color Presets", EditorStyles.boldLabel);
 
             // 横並びにプリセットを表示
             EditorGUILayout.BeginHorizontal();
             foreach (var preset in colorPresets)
             {
                 // カラーボックスを表示
-                Rect boxRect = GUILayoutUtility.GetRect(30, 30, GUILayout.ExpandWidth(true)); // 30pxx30pxのボックスを設定
-                EditorGUI.DrawRect(boxRect, preset.color); // ボックスを描画
+                // 30pxx30pxのボックスを設定
+                Rect boxRect = GUILayoutUtility.GetRect(30, 30, GUILayout.ExpandWidth(true));
+                // ボックスを描画
+                EditorGUI.DrawRect(boxRect, preset.color);
 
                 // ボックスがクリックされたらその色を選択
                 if (Event.current.type == EventType.MouseDown && boxRect.Contains(Event.current.mousePosition))
@@ -110,7 +117,8 @@ public class HierarchyMemoColorEditor : EditorWindow
 
             // Customのカラーピッカーを表示
             color = EditorGUILayout.ColorField("Custom Color", color);
-            EditorGUILayout.EndVertical(); // 色の設定部分を囲んだ枠を終了
+            // 色の設定部分を囲んだ枠を終了
+            EditorGUILayout.EndVertical();
 
             // 分割線
             EditorGUI.DrawRect(EditorGUILayout.BeginHorizontal(), Color.black);
@@ -118,12 +126,17 @@ public class HierarchyMemoColorEditor : EditorWindow
             EditorGUILayout.EndHorizontal();
 
             // Memoの表示
-            EditorGUILayout.BeginVertical("box"); // メモ部分を囲む枠
-            GUILayout.Label("Memo", EditorStyles.boldLabel); // 太字で表示
-            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, GUILayout.Height(100)); // スクロールエリアの高さを設定
-            memo = EditorGUILayout.TextArea(memo, GUILayout.Height(200)); // メモの入力エリアを広くする
+            // メモ部分を囲む枠
+            EditorGUILayout.BeginVertical("box");
+            // 太字で表示
+            GUILayout.Label("Memo", EditorStyles.boldLabel);
+            // スクロールエリアの高さを設定
+            scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition, GUILayout.Height(100));
+            // メモの入力エリア
+            memo = EditorGUILayout.TextArea(memo, GUILayout.Height(200));
             EditorGUILayout.EndScrollView();
-            EditorGUILayout.EndVertical(); // メモ部分を囲んだ枠を終了
+            // メモ部分を囲んだ枠を終了
+            EditorGUILayout.EndVertical();
 
             if (GUILayout.Button("Apply Settings"))
             {
@@ -145,15 +158,21 @@ public class HierarchyMemoColorEditor : EditorWindow
     private void ApplySettings(int instanceID)
     {
         objectSettings[instanceID] = (memo, color);
-        EditorUtility.SetDirty(selectedObject); // オブジェクトをdirtyにする
+        // オブジェクトをdirtyにする
+        EditorUtility.SetDirty(selectedObject);
         Debug.Log($"Applied memo and color to {selectedObject.name}");
     }
 
+    /// <summary>
+    /// メモを空に、色をリセット
+    /// </summary>
+    /// <param name="instanceID"></param>
     private void ResetSettings(int instanceID)
     {
-        // メモを空に、色をリセット
-        objectSettings.Remove(instanceID); // 設定を削除することで背景色をデフォルトに戻す
-        EditorUtility.SetDirty(selectedObject); // オブジェクトをdirtyにする
+        // 設定を削除することで背景色をデフォルトに戻す
+        objectSettings.Remove(instanceID);
+        // オブジェクトをdirtyにする
+        EditorUtility.SetDirty(selectedObject);
         Debug.Log($"Reset settings for {selectedObject.name}");
     }
 
