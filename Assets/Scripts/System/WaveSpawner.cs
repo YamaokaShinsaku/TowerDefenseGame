@@ -23,7 +23,7 @@ public class WaveSpawner : MonoBehaviour
 
     // Wave番号
     private int waveNumber = 0;
-
+    // ウェーブデータ
     public List<WaveData> waves;
 
     private bool waveInProgress = false;
